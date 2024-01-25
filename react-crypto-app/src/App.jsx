@@ -3,8 +3,6 @@ import { AppSider } from "./components/layout/AppSider"
 import { AppContent } from "./components/layout/AppContent"
 import { Layout } from "antd"
 
-
-
 const App = () => {
 
   return (
