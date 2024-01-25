@@ -1,6 +1,6 @@
 import { cryptoAssets, cryptoData } from "./data"
 
-const fakefetchCrypto = () => {
+export const fakeFetchCrypto = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(cryptoData)
@@ -8,7 +8,7 @@ const fakefetchCrypto = () => {
     })
 }
 
-const fetchAssets = () => {
+export const fetchAssets = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(cryptoAssets)
