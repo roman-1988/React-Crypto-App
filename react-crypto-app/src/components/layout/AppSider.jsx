@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Layout, Card, Statistic, List, Typography, Spin } from "antd"
+import { Layout, Card, Statistic, List, Typography, Spin, Tag } from "antd"
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons"
 import { fakeFetchCrypto, fetchAssets } from "../../api"
 import { percentDifference } from "../../utils"
@@ -56,14 +56,26 @@ const AppSider = () => {
                         <List
                             size="small"
                             dataSource={[
-                                { title: "Total Profit", value: asset.totalProfit },
-                                { title: "Asset Amount", value: asset.amount },
+                                { title: "Total Profit", value: asset.totalProfit, withTag: true },
+                                { title: "Asset Amount", value: asset.amount, isPlain: true },
                                 { title: "Difference", value: asset.growPercent }
                             ]}
                             renderItem={(item) => (
                                 <List.Item>
                                     <span>{item.title}</span>
-                                    <span>{item.value}</span>
+                                    <span>
+                                        {item.withTag && (
+                                            <Tag color={asset.grow ? "green" : "red"}>
+                                                {asset.growPercent}%
+                                            </Tag>
+                                        )}
+                                        {item.isPlain && item.value}
+                                        {!item.isPlain && (
+                                            <Typography.Text type={asset.grow ? "success" : "danger"}>
+                                                {item.value.toFixed(2)}$
+                                            </Typography.Text>
+                                        )}
+                                    </span>
                                 </List.Item>
                             )}
                         />
