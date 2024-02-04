@@ -17,10 +17,13 @@ const validateMessages = {
     types: {
         number: "${label} is not valid number"
     },
-    number: "${label} must be between ${min} and ${max}"
+    number: {
+        range: "${label} must be between ${min} and ${max}"
+    }
 }
 
 const AddAssetForm = () => {
+    const [form] = Form.useForm()
     const { crypto } = useCrypto()
     const [coin, setCoin] = useState(null)
 
@@ -55,9 +58,24 @@ const AddAssetForm = () => {
         console.log("finish", values)
     }
 
+    const handleAmountChange = (value) => {
+        const price = form.getFieldValue("price")
+        form.setFieldsValue({
+            total: +(value * price).toFixed(2)
+        })
+    }
+
+    const handlePriceChange = (value) => {
+        const amount = form.getFieldValue("amount")
+        form.setFieldsValue({
+            total: +(amount * value).toFixed(2)
+        })
+    }
+
     return (
         <>
             <Form
+                form={form}
                 name="basic"
                 labelCol={{
                     span: 4,
@@ -68,7 +86,9 @@ const AddAssetForm = () => {
                 style={{
                     maxWidth: 600,
                 }}
-                initialValues={{}}
+                initialValues={{
+                    price: +coin.price.toFixed(2)
+                }}
                 onFinish={onFinish}
                 validateMessages={validateMessages}
             >
@@ -91,11 +111,15 @@ const AddAssetForm = () => {
                         },
                     ]}
                 >
-                    <InputNumber style={{ width: "100%" }} />
+                    <InputNumber
+                        placeholder="Enter coin amount"
+                        style={{ width: "100%" }}
+                        onChange={handleAmountChange}
+                    />
                 </Form.Item>
 
                 <Form.Item label="Price" name="price">
-                    <InputNumber disabled style={{ width: "100%" }} />
+                    <InputNumber onChange={handlePriceChange} style={{ width: "100%" }} />
                 </Form.Item>
 
                 <Form.Item label="Data & Time" name="date">
