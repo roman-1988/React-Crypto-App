@@ -1,6 +1,7 @@
 import { Layout, Typography } from "antd"
-import SizeContext from "antd/es/config-provider/SizeContext"
 import { useCrypto } from "../../context/crypto-context"
+import { AssetsTable } from "../AssetsTable"
+import { PortfolioChart } from "../PortfolioChart"
 
 const contentStyle = {
     textAlign: "center",
@@ -25,6 +26,8 @@ const AppContent = () => {
                 <Typography.Title level={3} style={{ textAlign: "left", color: "#fff" }}>
                     Portfolio: {result}$
                 </Typography.Title>
+                <PortfolioChart />
+                <AssetsTable />
             </Layout.Content>
         </>
     )
